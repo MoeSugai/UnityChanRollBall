@@ -5,15 +5,27 @@ public class CharaController : MonoBehaviour {
 
 	private Vector3 offset;
 	private Animator anim;
+    private AudioSource audio;
 
-	// Use this for initialization
-	void Start () {
-		offset = this.transform.position - target.transform.position;
+    // Use this for initialization
+    void Start () {
+        audio = GetComponent<AudioSource>();
+        
+        offset = this.transform.position - target.transform.position;
 		anim = GetComponent<Animator>();
 	}
 
 	public GameObject target;
-	
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            anim.CrossFade("Jumping@loop",0.1f,0);
+            audio.Play();
+            Debug.Log("Space key was pressed.");
+        }
+    }
+
 	// Update is called once per frame
 	void LateUpdate () {
 		this.transform.position = target.transform.position + offset;
